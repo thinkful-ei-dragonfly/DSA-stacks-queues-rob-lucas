@@ -99,12 +99,12 @@ function main() {
 
   // testing #3
   // True, true, true, false
-  console.log(is_palindrome('dad'));
-  console.log(is_palindrome('A man, a plan, a canal: Panama'));
-  console.log(is_palindrome('1001'));
-  console.log(is_palindrome('Tauhida'));
+  // console.log(is_palindrome('dad'));
+  // console.log(is_palindrome('A man, a plan, a canal: Panama'));
+  // console.log(is_palindrome('1001'));
+  // console.log(is_palindrome('Tauhida'));
 }
 
 main();
 
-module.exports = Stack
+module.exports = Stack;

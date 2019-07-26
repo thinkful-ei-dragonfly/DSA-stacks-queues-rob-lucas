@@ -1,25 +1,55 @@
-import { Queue } = require('./Queue.js')
-import { Stack } = require('./Stack.js')
+'use strict';
+
+const Queue = require('./Queue.js');
+const Stack = require('./Stack.js');
+
 
 function queueImplementation() {
-  const stackOne = new Stack()
-  const stackTwo = new Stack()
+  const stackOne = new Stack();
+  const stackTwo = new Stack();
 
-  stackOne.push('Kirk');
-  stackOne.push('Spock');
-  stackOne.push('McCoy');
-  stackOne.push('Scotty');
+  const mimicQueue = {
+    stackOne,
+    stackTwo,
+    enqueue: function enqueue(value) {
+      // add value to top of stack one
+      stackOne.push(value);
+    },
+    dequeue: function dequeue() {
+      if (stackOne.top === null) {
+        console.log('queue is already empty');
+        return;
+      }
 
-  stackTwo.push('First');
-  stackTwo.push('Second');
-  stackTwo.push('Third');
-  stackTwo.push('Fourth');
+      let returnedNode = null;
+      while (stackOne.top.next !== null) {
+        stackTwo.push(stackOne.pop());
+      }
+      returnedNode = stackOne.top;
+      stackOne.pop();
+      this._addBackToOne(stackOne, stackTwo);
+      return returnedNode;
+    },
+    _addBackToOne: function _addBackToOne(stackOne, stackTwo) {
+      while (stackTwo.top !== null) {
+        stackOne.push(stackTwo.pop());
+      }
+    },
+    display: function display() {
+      while (stackOne.top !== null) {
+        console.log(stackOne.top.data);
+        stackOne.top = stackOne.top.next;
+      }
+    }
+  };
 
-  let testQueue = new Queue()
+  mimicQueue.enqueue('firstIntoStackOne');
+  mimicQueue.enqueue('secondIntoStackOne');
+  mimicQueue.enqueue('thirdIntoStackOne');
 
-  testQueue.enqueue(stackOne)
-  testQueue.enqueue(stackTwo)
+  mimicQueue.dequeue();
+  mimicQueue.dequeue();
+  mimicQueue.display();
 
-  console.log(testQueue.first);
 }
-queueImplementation()
+queueImplementation();
